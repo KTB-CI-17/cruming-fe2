@@ -1,35 +1,46 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Icon } from 'react-native-paper';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+    <Tabs screenOptions={{
+      headerShown: false,
+      tabBarActiveTintColor: '#6B4EFF',
+      tabBarInactiveTintColor: '#999999',
+    }}>
       <Tabs.Screen
-        name="index"
+        name="profile"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+          title: '내 정보',
+          tabBarIcon: ({ color }) => <Icon source="account" color={color} size={24} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="video"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
+          title: '영상 분석',
+          tabBarIcon: ({ color }) => <Icon source="video" color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: '타임라인',
+          tabBarIcon: ({ color }) => <Icon source="calendar" color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="community"
+        options={{
+          title: '커뮤니티',
+          tabBarIcon: ({ color }) => <Icon source="forum" color={color} size={24} />,
+        }}
+      />
+      <Tabs.Screen
+        name="shoes"
+        options={{
+          title: '암벽화',
+          tabBarIcon: ({ color }) => <Icon source="shoe-formal" color={color} size={24} />,
         }}
       />
     </Tabs>
