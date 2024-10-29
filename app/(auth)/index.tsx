@@ -1,6 +1,6 @@
 import { View, Image } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import { router } from 'expo-router'; // useRouter 대신 router 직접 import
+import { router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,7 +11,7 @@ export default function AuthScreen() {
       // const result = await loginWithProvider(provider);
       
       // 로그인 성공 시 메인 탭으로 이동
-      router.replace('/(tabs)/calendar');
+      router.replace('/(tabs)/');
     } catch (error) {
       console.error(`${provider} 로그인 실패:`, error);
     }
@@ -59,28 +59,33 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   titleContainer: {
     alignItems: 'center',
-    marginTop: 60,
+    marginBottom: 40,
   },
   titleText: {
     color: '#6B4EFF',
     lineHeight: 40,
+    fontSize: 24,
   },
   logo: {
     width: 120,
     height: 120,
     alignSelf: 'center',
-    marginVertical: 40,
+    marginVertical: 20,
   },
   brandName: {
     color: '#6B4EFF',
     textAlign: 'center',
     marginBottom: 40,
+    fontSize: 32,
   },
   buttonContainer: {
     padding: 20,
+    width: '100%',
   },
   loginButton: {
     marginBottom: 12,

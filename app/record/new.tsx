@@ -5,7 +5,11 @@ import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function NewRecordScreen() {
+interface NewRecordScreenProps {
+  onClose: () => void; // Prop for closing the modal
+}
+
+export default function NewRecordScreen({ onClose }: NewRecordScreenProps) {
   const router = useRouter();
   const [record, setRecord] = useState({
     location: '',
@@ -16,6 +20,12 @@ export default function NewRecordScreen() {
     visibility: 'public' as const,
   });
   const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleSubmit = () => {
+    // TODO: Implement record submission logic
+    // After submission, close the modal
+    onClose(); // Close the modal
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -86,7 +96,7 @@ export default function NewRecordScreen() {
 
         <Button
           mode="contained"
-          onPress={() => router.back()}
+          onPress={handleSubmit} // Call handleSubmit on press
           style={styles.submitButton}
         >
           등록
