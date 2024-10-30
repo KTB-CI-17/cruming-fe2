@@ -3,17 +3,81 @@ import { Text, Button } from 'react-native-paper';
 import { router } from 'expo-router';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ReactElement, useEffect, useState } from 'react';
+import { login, getProfile } from '@react-native-seoul/kakao-login';
+import type {
+  GetProfileResponse,
+  NaverLoginResponse,
+} from '@react-native-seoul/naver-login';
+import NaverLogin from '@react-native-seoul/naver-login';
+const Gap = (): ReactElement => <View style={{ marginTop: 24 }} />;
+const ResponseJsonText = ({
+  json = {},
+  name,
+}: {
+  json?: object;
+  name: string;
+}): ReactElement => (
+  <View
+    style={{
+      padding: 12,
+      borderRadius: 16,
+      borderWidth: 1,
+      backgroundColor: '#242c3d',
+    }}
+  >
+    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white' }}>
+      {name}
+    </Text>
+    <Text style={{ color: 'white', fontSize: 13, lineHeight: 20 }}>
+      {JSON.stringify(json, null, 4)}
+    </Text>
+  </View>
+);
+/** Fill your keys */
+const consumerKey = 'js0fZdXgGDN6cvtbNv87';
+const consumerSecret = 'fqsAq578xA';
+const appName = 'cruming';
 
+/** This key is setup in iOS. So don't touch it */
+const serviceUrlScheme = 'naverlogin';
 export default function AuthScreen() {
+  useEffect(() => {
+    NaverLogin.initialize({
+      appName,
+      consumerKey,
+      consumerSecret,
+      serviceUrlSchemeIOS: serviceUrlScheme,
+      disableNaverAppAuthIOS: true,
+    });
+  }, []);
+
+  const [success, setSuccessResponse] =
+    useState<NaverLoginResponse['successResponse']>();
+
+  const [failure, setFailureResponse] =
+    useState<NaverLoginResponse['failureResponse']>();
+  const [getProfileRes, setGetProfileRes] = useState<GetProfileResponse>();
+
+  const [result, setResult] = useState<string>('');
+
   const handleLogin = async (provider: 'kakao' | 'naver') => {
     try {
-      // TODO: 실제 로그인 로직 구현
-      // const result = await loginWithProvider(provider);
-      
-      // 로그인 성공 시 메인 탭으로 이동
+      if (provider === 'kakao') {
+        const token = await login();
+        const profile = await getProfile();
+        console.log('Kakao login success:', profile);
+      } else if (provider === 'naver') {
+        const { failureResponse, successResponse } = await NaverLogin.login();
+        setSuccessResponse(successResponse);
+        setFailureResponse(failureResponse);
+        console.log('Naver login success:', successResponse);
+      }
+
+      // Navigate to main tab on success
       router.replace('/(tabs)/');
     } catch (error) {
-      console.error(`${provider} 로그인 실패:`, error);
+      console.error(`${provider} login failed:`, error);
     }
   };
 

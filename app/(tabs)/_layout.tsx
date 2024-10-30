@@ -16,13 +16,6 @@ export default function TabLayout() {
         fontSize: 12,
       },
     }}>
-      {/* <Tabs.Screen
-        name="index"
-        options={{
-          title: '홈',
-          tabBarIcon: ({ color }: { color: string }) => <Icon source="home" color={color} size={24} />,
-        }}
-      /> */}
       <Tabs.Screen
         name="profile/index"
         options={{
@@ -35,21 +28,6 @@ export default function TabLayout() {
         options={{
           title: '타임라인',
           tabBarIcon: ({ color }: { color: string }) => <Icon source="calendar" color={color} size={24} />,
-        }}
-      />
-      {/* <Tabs.Screen
-        name="explore"
-        options={{
-          title: '탐색',
-          tabBarIcon: ({ color }: { color: string }) => <Icon source="compass" color={color} size={24} />,
-        }}
-      /> */}
-
-      <Tabs.Screen
-        name="analysis/index"
-        options={{
-          title: '분석/통계',
-          tabBarIcon: ({ color }: { color: string }) => <Icon source="chart-bar" color={color} size={24} />,
         }}
       />
       <Tabs.Screen

@@ -1,6 +1,7 @@
 import { View, StyleSheet, Image } from 'react-native';
 import { Text, Button, TextInput } from 'react-native-paper';
 import { useState } from 'react';
+import { router } from 'expo-router';
 // import footTypes from '@/assets/images/foot-types.png';
 // or
 // import footTypes from '../../../assets/foot-types.png';
@@ -53,7 +54,15 @@ export default function ShoeFilter() {
   };
 
   const handleAnalysis = () => {
-    // 분석 로직 구현
+    router.push({
+      pathname: '/(screens)/shoes/result',
+      params: {
+        footType: selectedFootType,
+        width: selectedWidth,
+        level: selectedLevel,
+        size: size,
+      },
+    });
   };
 
   return (
