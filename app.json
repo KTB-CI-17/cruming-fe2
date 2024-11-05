@@ -23,7 +23,7 @@
       [
         "@react-native-seoul/naver-login",
         {
-          "urlScheme": "naverlogin" 
+          "urlScheme": "naverlogin"
         }
       ],
       [
@@ -61,10 +61,15 @@
       "infoPlist": {
         "CFBundleURLTypes": [
           {
-            "CFBundleURLSchemes": ["naverlogin"]
+            "CFBundleURLSchemes": [
+              "naverlogin"
+            ]
           }
         ]
       }
+    },
+    "android": {
+      "package": "com.ci.cruming"
     }
   }
 }

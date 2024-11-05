@@ -10,6 +10,7 @@ import type {
   NaverLoginResponse,
 } from '@react-native-seoul/naver-login';
 import NaverLogin from '@react-native-seoul/naver-login';
+import { useAuth } from '@/app/contexts/auth';
 const Gap = (): ReactElement => <View style={{ marginTop: 24 }} />;
 const ResponseJsonText = ({
   json = {},
@@ -42,7 +43,10 @@ const appName = 'cruming';
 /** This key is setup in iOS. So don't touch it */
 const serviceUrlScheme = 'naverlogin';
 export default function AuthScreen() {
+  const { exchangeSocialToken } = useAuth();
+
   useEffect(() => {
+    console.log('NaverLogin:', NaverLogin); 
     NaverLogin.initialize({
       appName,
       consumerKey,
@@ -61,20 +65,35 @@ export default function AuthScreen() {
 
   const [result, setResult] = useState<string>('');
 
+  // const mapKakaoProfile = (profile: any): UserProfile => ({
+  //   id: profile.id?.toString() || '',
+  //   nickname: profile.nickname || '',
+  //   profileImage: profile.profileImageUrl || profile.thumbnailImageUrl || '',
+  // });
+
+  // const mapNaverProfile = (profile: any): UserProfile => ({
+  //   id: profile.response?.id || '',
+  //   nickname: profile.response?.nickname || '',
+  //   profileImage: profile.response?.profile_image || '',
+  // });
+
   const handleLogin = async (provider: 'kakao' | 'naver') => {
     try {
       if (provider === 'kakao') {
         const token = await login();
-        const profile = await getProfile();
-        console.log('Kakao login success:', profile);
+        // const kakaoProfile = await getProfile();
+        // const mappedProfile = mapKakaoProfile(kakaoProfile);
+        await exchangeSocialToken(token.accessToken, 'kakao');
+        console.log('Kakao login success:', token);
       } else if (provider === 'naver') {
         const { failureResponse, successResponse } = await NaverLogin.login();
-        setSuccessResponse(successResponse);
-        setFailureResponse(failureResponse);
-        console.log('Naver login success:', successResponse);
+        if (successResponse?.accessToken) {
+          // const naverProfile = await NaverLogin.getProfile(successResponse.accessToken);
+          // const mappedProfile = mapNaverProfile(naverProfile);
+          await exchangeSocialToken(successResponse.accessToken, 'naver');
+          console.log('Naver login success:', successResponse);
+        }
       }
-
-      // Navigate to main tab on success
       router.replace('/(tabs)/');
     } catch (error) {
       console.error(`${provider} login failed:`, error);
@@ -86,7 +105,7 @@ export default function AuthScreen() {
       <View style={styles.titleContainer}>
         <Text variant="headlineLarge" style={styles.titleText}>나만의</Text>
         <Text variant="headlineLarge" style={styles.titleText}>클라이밍</Text>
-        <Text variant="headlineLarge" style={styles.titleText}>커뮤니티</Text>
+        <Text variant="headlineLarge" style={styles.titleText}>커뮤니티</Text>  
       </View>
 
       <Image
