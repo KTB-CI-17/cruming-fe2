@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function exchangeSocialToken(socialToken: string, provider: string) {
     try {
-      const response = await fetch('YOUR_API_URL/auth/token', {
+      const response = await fetch('http://내컴퓨터로컬아이피:8080/api/v1/auth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

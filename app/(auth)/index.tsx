@@ -83,14 +83,14 @@ export default function AuthScreen() {
         const token = await login();
         // const kakaoProfile = await getProfile();
         // const mappedProfile = mapKakaoProfile(kakaoProfile);
-        await exchangeSocialToken(token.accessToken, 'kakao');
+        await exchangeSocialToken(token.accessToken, provider.toUpperCase());
         console.log('Kakao login success:', token);
       } else if (provider === 'naver') {
         const { failureResponse, successResponse } = await NaverLogin.login();
         if (successResponse?.accessToken) {
           // const naverProfile = await NaverLogin.getProfile(successResponse.accessToken);
           // const mappedProfile = mapNaverProfile(naverProfile);
-          await exchangeSocialToken(successResponse.accessToken, 'naver');
+          await exchangeSocialToken(successResponse.accessToken, provider.toUpperCase());
           console.log('Naver login success:', successResponse);
         }
       }
