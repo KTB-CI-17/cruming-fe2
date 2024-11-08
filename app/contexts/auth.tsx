@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   async function exchangeSocialToken(socialToken: string, provider: string) {
     try {
-      const response = await fetch('http://내컴퓨터로컬아이피:8080/api/v1/auth/token', {
+      const response = await fetch('http://192.168.45.236:8080/api/v1/auth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (tokenData.expiresAt - now < TOKEN_REFRESH_THRESHOLD) {
         // 서버에 토큰 갱신 요청
-        const response = await fetch('http://내컴퓨터로컬아이피:8080/api/v1/auth/token/refresh', {
+        const response = await fetch('http://192.168.45.236:8080/api/v1/auth/token/refresh', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
